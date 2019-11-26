@@ -999,7 +999,7 @@ export default class Articulo extends React.Component{
 								  <th>Nombre</th>
 								  <th>Apellido Pat.</th>
 								  <th>Apellido Mat.</th>
-								  <th>Tipo Autor</th>
+								  /*<th>Tipo Autor</th>*/
                               </tr>
                           </thead>
                           <tbody>
@@ -1010,7 +1010,7 @@ export default class Articulo extends React.Component{
 										 <td>{autor.nombre}</td>
 										 <td>{autor.apellidoPaterno}</td>
 										 <td>{autor.apellidoMaterno}</td>
-                                        <td>
+											 {/* <td>
           <Select
             id="conceptos"
             className="conceptos"
@@ -1020,29 +1020,13 @@ export default class Articulo extends React.Component{
             disabled={this.state.desabilitar}
           />
 
-        </td>
-																				 
+											 </td>*/}
+				1																 
                                       </tr>
                               )}
 
                           </tbody>
 						</table>
-                        {/*<div className="row">
-                          <div className="form-group col-md-6">
-                            <label>Primer Autor :</label>
-                            <input type="text" value={this.state.autor1} name="autor1" onChange={this.onChange} className="form-control" />
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label>Segundo Autor:</label>
-                            <input type="text" value={this.state.autor2} name="autor2" onChange={this.onChange} className="form-control" />
-                          </div>
-                        </div>
-                        <div className="row">
-                          <div className="form-group col-md-6">
-                            <label>Tercer Autor:</label>
-                            <input type="text" value={this.state.autor3} name="autor3" onChange={this.onChange} className="form-control" />
-                          </div>
-                        </div>*/}
                         <div className="row">
                           <div className="form-group col-md-12">
                             <label>Titulo Tesis:</label>
