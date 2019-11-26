@@ -87,7 +87,9 @@ export default class Articulo extends React.Component{
 	this.buscar= this.buscar.bind(this);
 	this.ValidarNombre = this.ValidarNombre.bind(this);
 	this.agregarautor = this.agregarautor.bind(this);
+	this.cerrarautor = this.cerrarautor.bind(this);
 	this.pu=this.pu.bind(this);
+	
     }
     
 	pu(event){
@@ -118,7 +120,12 @@ export default class Articulo extends React.Component{
         this.loadJournal();
 		console.log(this.state.marca_temporal);
       }
-     
+     cerrarautor(){
+		 this.setState({
+			 nestedModale : !this.state.nestedModale
+		 });
+		this.togglet('3');
+	 }
 	 agregarautor(){
 		 if(this.state.tipo === 1){
 			 if(this.state.codautores.length<3){
@@ -130,6 +137,10 @@ export default class Articulo extends React.Component{
 		         })
 		    .then((alumno) =>{
 			 this.state.autores.push(alumno)
+			 this.togglet('3');
+			 this.setState({
+          nestedModale: !this.state.nestedModale
+        })
 		 })
 		 .catch((error) =>{
 			 console.log(error)
@@ -148,6 +159,10 @@ export default class Articulo extends React.Component{
 		         })
 		 .then((alumno) =>{
 			 this.state.autores.push(alumno)
+			 this.togglet('3');
+			 this.setState({
+          nestedModale: !this.state.nestedModale
+        })
 		 })
 		 .catch((error) =>{
 			 console.log(error)
@@ -168,6 +183,10 @@ export default class Articulo extends React.Component{
 						 })
 						 .then((alumno) =>{
 							 this.state.autores.push(alumno)
+							 this.togglet('3');
+							 this.setState({
+          nestedModale: !this.state.nestedModale
+        })
 						 })
 						 .catch((error) =>{
 						   console.log(error)
@@ -178,6 +197,7 @@ export default class Articulo extends React.Component{
 		 })
 		 console.log(this.state.codautores)
 		 } 
+		 
 	 }
       reloadRevista() {
         fetch(CONFIG + 'revista')
@@ -299,7 +319,6 @@ export default class Articulo extends React.Component{
             return response.json();
         })
         .then((res) => {
-			console.log(res);
             let articulo = res;
             this.setState({
 				hcrear: !this.state.hcrear,
@@ -356,9 +375,9 @@ export default class Articulo extends React.Component{
         fetch(CONFIG + 'articuloCientifico',{
             method:'put',
 			headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
+             'Accept': 'application/json',
+             'Content-Type': 'application/json',
+            },
             body :JSON.stringify(articulo)
         })
         .then((res) => {
@@ -407,6 +426,9 @@ export default class Articulo extends React.Component{
             return response.json();
         })
         .then((res) => {
+			res = res.filter((a)=>{
+				return (a.primer_autor == this.state.codigo || a.segundo_autor == this.state.codigo || a.tercer_autor == this.state.codigo)
+			})
             this.setState({ articulos: res})
           })
         .catch((error) => {
@@ -547,8 +569,9 @@ export default class Articulo extends React.Component{
       toggleNestede() {
         this.setState({
           nestedModale: !this.state.nestedModale,
-          closeAll: false
+          closeAll: false,
         })
+		this.togglet('4');
       }
     
       toggleAll() {
@@ -934,8 +957,6 @@ export default class Articulo extends React.Component{
                                           
                                       </tr>
                               )}
-                                    
-                              
                           </tbody>
 										  </table>
                               </div>
@@ -988,7 +1009,7 @@ export default class Articulo extends React.Component{
                             </ModalBody>
                             <ModalFooter>
                               <Button color="primary" onClick={this.agregarautor}>Agregar</Button>{' '}
-                              <Button color="secondary" onClick={this.toggleAll}>All Done</Button>
+                              <Button color="secondary" onClick={this.cerrarautor}>Salir</Button>
                             </ModalFooter>
                           </form>
                         </Modal>
@@ -999,7 +1020,7 @@ export default class Articulo extends React.Component{
 								  <th>Nombre</th>
 								  <th>Apellido Pat.</th>
 								  <th>Apellido Mat.</th>
-								  /*<th>Tipo Autor</th>*/
+								  {/*<th>Tipo Autor</th>*/}
                               </tr>
                           </thead>
                           <tbody>
@@ -1047,9 +1068,6 @@ export default class Articulo extends React.Component{
                       </TabPane>
                     </TabContent>
                   </ModalBody>
-                  <div className="progress" style={{ height: 20 + 'px', margin: 20 + 'px' }}>
-                    <div className="progress-bar" role="progressbar" style={{ width: 50 + '%' }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
                   <ModalFooter>
                     <Button  value="Crear" onClick={this.saveArticulo} hidden={this.state.hcrear}  color="primary" className="btn btn-primary" >Crear</Button>{''}
 					<Button  value="Editar" onClick={this.saveArticuloe} hidden={!this.state.hcrear} color="primary" className="btn btn-success" >Editar</Button>{''}
