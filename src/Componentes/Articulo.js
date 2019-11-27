@@ -99,15 +99,12 @@ export default class Articulo extends React.Component{
 			var p = this.state.pruebaa.filter((b)=>{
 			  return  b !== event.target.value;
 			})
-			console.log(p)
 			var fin = p.length
 			if((fin - ini) ==0)  p.push(event.target.value);
 			console.log(p)
 			this.setState({
                 pruebaa:p
             });
-			console.log(this.state.pruebaa)
-			console.log(this.state.pruebaa.length)
 		}else{
 			console.log("Ya se eligieron 3 autores")
 		}
@@ -174,8 +171,7 @@ export default class Articulo extends React.Component{
 		 }else{
 	     console.log(this.state.pruebaa)
 		 this.state.pruebaa.map((a)=>{
-						if(this.state.codautores.length<3){
-                          console.log(a)							
+						if(this.state.codautores.length<3){							
 					     this.state.codautores.push(a)
 						 fetch(CONFIG+'mse/alumno/buscar/'+a)
 						 .then((response) =>{
@@ -185,8 +181,8 @@ export default class Articulo extends React.Component{
 							 this.state.autores.push(alumno)
 							 this.togglet('3');
 							 this.setState({
-          nestedModale: !this.state.nestedModale
-        })
+                             nestedModale: !this.state.nestedModale
+                           })
 						 })
 						 .catch((error) =>{
 						   console.log(error)
@@ -205,7 +201,6 @@ export default class Articulo extends React.Component{
             return response.json();
         })
         .then((revista) => {
-            console.log(revista);
             this.setState({
                 revistas:revista
             });
@@ -268,7 +263,6 @@ export default class Articulo extends React.Component{
            id_estado_publicacion : this.state.idestado,
            id_revista : this.state.idrevista
         };
-		console.log(articulo);
         fetch(CONFIG + 'articuloCientifico',{
             method:'post',
 			headers: {
@@ -284,6 +278,7 @@ export default class Articulo extends React.Component{
 				modal: !this.state.modal
               });
               this.reloadArticuloCientifico();
+			  this.togglet('1');
         })
         .catch((error) => {
             console.log(error);
@@ -335,19 +330,41 @@ export default class Articulo extends React.Component{
                 titulotesis : articulo.titulo_tesis,
                 asesor : articulo.apellidos_nombres_asesor,
                 linkcyber : articulo.link_cybertesis,
-				autor1 : articulo.primer_autor,
-				autor2 : articulo.segundo_autor,
-				autor3 : articulo.tercer_autor,
+				primer_autor : this.state.codautores[0],
+		        segundo_autor : this.state.codautores[1]||'',
+		        tercer_autor : this.state.codautores[2]||'',
                 idrevista : articulo.id_revista,
                 idestado : articulo.id_estado_publicacion,
 				titulo : articulo.titulo,
 				idarticulo : articulo.id_articulo_cientifico
               })
+						
+			this.state.codautores.push(this.state.autor1)
+			if(this.state.autor2 != ""){
+				this.state.codautores.push(this.state.autor2)
+			}
+			if(this.state.autor3 != ""){
+				this.state.codautores.push(this.state.autor3)
+			}
+			this.state.codautores.map((c)=>{
+				fetch(CONFIG+'mse/alumno/buscar/'+c)
+						 .then((response) =>{
+							 return response.json()
+						 })
+						 .then((alumno) =>{
+							 this.state.autores.push(alumno)
+						 })
+						 .catch((error) =>{
+						   console.log(error)
+						 })
+			})
+	
         })
         .catch((error) => {
             console.log(error);
         });
       }
+	  
 	  saveArticuloe = (e) => {
         e.preventDefault();
 		
@@ -371,6 +388,7 @@ export default class Articulo extends React.Component{
            id_articulo_cientifico : this.state.idarticulo,
 		   id_revista : this.state.idrevista
         };
+		
 		console.log(articulo);
         fetch(CONFIG + 'articuloCientifico',{
             method:'put',
@@ -458,7 +476,9 @@ export default class Articulo extends React.Component{
                 idrevista : '',
                 idestado : '',
 				titulo : '',
-				idarticulo : ''
+				idarticulo : '',
+				codautores :[],
+				autores :[]
         });
       }
       handleChangeName(event) {
@@ -605,7 +625,6 @@ export default class Articulo extends React.Component{
            this.setState({
                 alumno:alumno
             })
-            console.log(this.state.alumno);
         })
         .catch((error) => {
             console.log(error);
@@ -996,7 +1015,6 @@ export default class Articulo extends React.Component{
 									     <td>{alumno.cod_alumno}</td>
                                           <td>{alumno.nombre_alumno}</td>
                                           <td>{alumno.nombre_programa}</td>
-                                          
                                       </tr>
                               )}
                                       
@@ -1041,8 +1059,7 @@ export default class Articulo extends React.Component{
             disabled={this.state.desabilitar}
           />
 
-											 </td>*/}
-				1																 
+											 </td>*/}															 
                                       </tr>
                               )}
 
