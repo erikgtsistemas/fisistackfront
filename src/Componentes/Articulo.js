@@ -67,8 +67,6 @@ export default class Articulo extends React.Component{
         };
     this.toggle = this.toggle.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
-    this.handleChangeTeam = this.handleChangeTeam.bind(this);
-    this.handleChangeCountry = this.handleChangeCountry.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleNested = this.toggleNested.bind(this);
     this.toggleNestede = this.toggleNestede.bind(this);
