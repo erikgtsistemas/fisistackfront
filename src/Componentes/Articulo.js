@@ -6,6 +6,7 @@ import CONFIG from '../Configuracion/Config';
 import {browserHistory} from 'react-router-3';
 import Alumno from './Alumno';
 import Select from 'react-select';
+import swal from 'sweetalert';
 
 
 export default class Articulo extends React.Component{
@@ -106,6 +107,7 @@ export default class Articulo extends React.Component{
                 pruebaa:p
             });
 		}else{
+			swal("Ya se eligieron 3 autores","","info");
 			console.log("Ya se eligieron 3 autores")
 		}
 		
@@ -144,6 +146,7 @@ export default class Articulo extends React.Component{
 		 })
 		 console.log(this.state.autores)
 			 }else{
+				 swal("Ya se eligieron 3 autores","","info");
 				 console.log("ya se registraron 3 autores")
 			 }
 		 }else if(this.state.tipo ===2){
@@ -166,6 +169,7 @@ export default class Articulo extends React.Component{
 		 })
 		 console.log(this.state.autores)
 			 }else{
+				 swal("Ya se eligieron 3 autores","","info");
 				 console.log("ya se registraron 3 autores")
 			 }
 		 }else{
@@ -188,6 +192,7 @@ export default class Articulo extends React.Component{
 						   console.log(error)
 						 })
 						}else{
+							swal("Ya se eligieron 3 autores","","info");
 							console.log("ya se registraron 3 autores")
 						}
 		 })
@@ -232,6 +237,7 @@ export default class Articulo extends React.Component{
                 nestedModal: !this.state.nestedModal,
                 closeAll: false
               });
+			swal("Revista agregada correctamente","","success");
             this.reloadRevista();
         })
         .catch((error) => {
@@ -277,6 +283,7 @@ export default class Articulo extends React.Component{
 				isOpen : !this.state.modal,
 				modal: !this.state.modal
               });
+			  swal("Articulo agregado correctamente","","success");
               this.reloadArticuloCientifico();
 			  this.togglet('1');
         })
@@ -301,6 +308,7 @@ export default class Articulo extends React.Component{
                 nestedModale: !this.state.nestedModale,
                 closeAll: false
               });
+			  swal("Estado Publicacion agregado correctamente","","success");
               this.reloadEstadoPublicacion();
         })
         .catch((error) => {
@@ -404,6 +412,7 @@ export default class Articulo extends React.Component{
 				modal: !this.state.modal,
 				isOpen : !this.state.modal
               });
+			 swal("Articulo editado correctamente","","success");
               this.reloadArticuloCientifico();
         })
         .catch((error) => {
@@ -418,6 +427,7 @@ export default class Articulo extends React.Component{
         .then((res) => {
             //this.setState({ message: 'Articulo deleted succesfully.' });
             this.setState({ articulos: this.state.articulos.filter(articulo => articulo.id_articulo_cientifico !== articuloId) });
+			swal("Articulo eliminado correctamente","","success");
         })
         .catch((error) => {
             console.log(error);
@@ -483,12 +493,6 @@ export default class Articulo extends React.Component{
       }
       handleChangeName(event) {
         this.setState({ name: event.target.value });
-      }
-      handleChangeTeam(event) {
-        this.setState({ team: event.target.value });
-      }
-      handleChangeCountry(event) {
-        this.setState({ country: event.target.value });
       }
     
       handleSubmit(event) {
