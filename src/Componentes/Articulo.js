@@ -25,9 +25,6 @@ export default class Articulo extends React.Component{
 			pruebaa : [],
 			tipo : 1,
 			a:'',
-			options:[{ value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }],
             modal: false
 			, idarticulo :''
             , idestado: ''
@@ -50,6 +47,7 @@ export default class Articulo extends React.Component{
             , estadopu: ''
             , nestedModal: false
             , nestedModale: false
+			,nestedModales:false
             , nombreconf : ''
             , estadoconf : ''
             , comconf : ''
@@ -88,9 +86,17 @@ export default class Articulo extends React.Component{
 	this.agregarautor = this.agregarautor.bind(this);
 	this.cerrarautor = this.cerrarautor.bind(this);
 	this.pu=this.pu.bind(this);
-	
+	this.toggleNestedes = this.toggleNestedes.bind(this);
     }
     
+	
+	toggleNestedes(){
+		this.setState({
+          nestedModales: !this.state.nestedModales,
+          closeAll: false,
+        })
+	}
+	
 	pu(event){
 		console.log(this.state.pruebaa.length)
 		if(this.state.pruebaa.length <=3){
@@ -807,7 +813,7 @@ export default class Articulo extends React.Component{
                           </div>
                           <div className="form-group col-md-1 ">
                             <label className="text-white">A</label>
-                            <Button color="success" onClick={this.toggleNestede}>+</Button>
+                            <Button color="success" onClick={this.toggleNestedes}>+</Button>
                           </div>
                         </div>
                         <div className="row">
@@ -865,7 +871,7 @@ export default class Articulo extends React.Component{
                             </ModalFooter>
                           </form>
                         </Modal>
-                        <Modal className="modal-sm" isOpen={this.state.nestedModale} toggle={this.toggleNestede} onClosed={this.state.closeAll ? this.toggle : undefined}>
+                        <Modal className="modal-sm" isOpen={this.state.nestedModales} toggle={this.toggleNestedes} onClosed={this.state.closeAll ? this.toggle : undefined}>
                           <form >
                             <ModalHeader >Registro Estado Publicación</ModalHeader>
                             <ModalBody >
