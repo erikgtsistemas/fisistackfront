@@ -463,6 +463,21 @@ export default class Articulo extends React.Component{
 
       }
       toggle() {
+		  var coda = []
+		  coda.push(this.state.codigo)
+		  console.log(coda)
+		  var aut = []
+				  fetch(CONFIG + 'mse/alumno/buscar/'+this.state.codigo)
+	              .then((response)=>{
+		           return response.json()
+		         })
+		    .then((alumno) =>{
+			 aut.push(alumno);
+		 })
+		 .catch((error) =>{
+			 console.log(error)
+		 })
+		 console.log(aut)
         this.setState({
           modal: !this.state.modal,
 		  hcrear: false,
@@ -485,9 +500,10 @@ export default class Articulo extends React.Component{
                 idestado : '',
 				titulo : '',
 				idarticulo : '',
-				codautores :[],
-				autores :[]
+				codautores :coda,
+				autores :aut
         });
+		this.togglet('1');
       }
       handleChangeName(event) {
         this.setState({ name: event.target.value });
@@ -890,7 +906,7 @@ export default class Articulo extends React.Component{
       
                       </TabPane>
                       <TabPane tabId="3">
-                         <button className="btn btn-success" onClick={this.toggleNestede}>Agregar</button>
+                         <button className="btn btn-success" onClick={this.toggleNestede}>Agregar Autor</button>
 						 <Modal className="modal-lg" isOpen={this.state.nestedModale} toggle={this.toggleNestede} onClosed={this.state.closeAll ? this.toggle : undefined}>
                           <form >
                             <ModalHeader >Busqueda Autor</ModalHeader>
